@@ -29,6 +29,7 @@ const LocationPreview = ({ image, link, description }) => {
               src={image}
               onClick={handleLocation}
               style={{ width: "100px" }}
+              alt=""
             />
           </div>
           {description && (
