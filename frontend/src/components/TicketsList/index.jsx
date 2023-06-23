@@ -179,7 +179,7 @@ const TicketsList = (props) => {
       type: "LOAD_TICKETS",
       payload: tickets,
     });
-  }, [tickets]);
+  }, [searchParam, status, tickets]);
 
   useEffect(() => {
     const socket = openSocket();
