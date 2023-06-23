@@ -10,7 +10,7 @@ import TextField from "@material-ui/core/TextField";
 import { toast } from "react-toastify";
 
 import api from "../../services/api";
-import { i18n } from "../../translate/i18n.js";
+import { i18n } from "../../translate/i18n";
 import toastError from "../../errors/toastError";
 
 const useStyles = makeStyles(theme => ({

@@ -4,6 +4,7 @@ function getConfig(name, defaultValue=null) {
         return window.ENV[name] || defaultValue;
     }
 
+    // eslint-disable-next-line no-undef
     return process.env[name] || defaultValue;
 }
 
