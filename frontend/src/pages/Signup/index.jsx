@@ -71,6 +71,11 @@ const UserSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
 });
 
+const verify = async ()=>{
+  const verifyPage = await api.post("/auth/verify");
+  return verifyPage;
+}
+
 const SignUp = () => {
   const classes = useStyles();
   const history = useHistory();
@@ -78,17 +83,6 @@ const SignUp = () => {
   const initialState = { name: "", email: "", password: "" };
   const [showPassword, setShowPassword] = useState(false);
 
-  useEffect(async ()=>{
-    const verifyPage = await api.post("/auth/verify");
-    if(verifyPage.status !== 200){
-      return  <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <Typography component="h1" variant="h5">
-          Indisponível para cadastro
-        </Typography>
-      </Container>
-    }
-  }, [])
 
   const [user] = useState(initialState);
 
@@ -102,7 +96,17 @@ const SignUp = () => {
     }
   };
 
-
+  if(verify.status !== 200){
+      return  (
+      <Container component="main" maxWidth="xs">
+      <CssBaseline />
+        <Typography component="h1" variant="h5">
+          Indisponível para cadastro
+        </Typography>
+      </Container>
+      )
+    
+  }
 
   return (
     <Container component="main" maxWidth="xs">
