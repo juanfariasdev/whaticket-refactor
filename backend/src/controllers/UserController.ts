@@ -26,6 +26,20 @@ export const index = async (req: Request, res: Response): Promise<Response> => {
 	return res.json({ users, count, hasMore });
 };
 
+export const verify = async (
+	req: Request,
+	res: Response,
+): Promise<Response> => {
+	if (
+		req.url === '/verify' &&
+		(await CheckSettingsHelper('userCreation')) === 'disabled'
+	) {
+		throw new AppError('ERR_USER_CREATION_DISABLED', 403);
+	}
+
+	return res.status(200);
+};
+
 export const store = async (req: Request, res: Response): Promise<Response> => {
 	const { email, password, name, profile, queueIds, whatsappId } = req.body;
 
