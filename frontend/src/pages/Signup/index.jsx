@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import * as Yup from "yup";
 import { useHistory } from "react-router-dom";
@@ -71,7 +71,7 @@ const UserSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
 });
 
-const SignUp = async () => {
+const SignUp = () => {
   const classes = useStyles();
   const history = useHistory();
 
@@ -87,21 +87,11 @@ const SignUp = async () => {
       toast.success(i18n.t("signup.toasts.success"));
       history.push("/login");
     } catch (err) {
+      console.log(err);
       toastError(err);
     }
   };
-  const verifyPage = await api.post("/auth/verify");
-  if(verifyPage.status !== 200){
-      return  (
-      <Container component="main" maxWidth="xs">
-      <CssBaseline />
-        <Typography component="h1" variant="h5">
-          Indisponível para cadastro
-        </Typography>
-      </Container>
-      )
-    
-  }
+
 
   return (
     <Container component="main" maxWidth="xs">
