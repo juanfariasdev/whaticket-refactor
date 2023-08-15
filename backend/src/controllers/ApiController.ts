@@ -35,47 +35,51 @@ const createContact = async (
 ) => {
 	await CheckIsValidContact(newContact);
 
-	const validNumber: any = await CheckContactNumber(newContact);
+	const validNumber = await CheckContactNumber(newContact);
 
-	const profilePicUrl = await GetProfilePicUrl(validNumber);
+	if (validNumber) {
+		const profilePicUrl = await GetProfilePicUrl(validNumber);
 
-	const number = validNumber;
+		const contactData = {
+			name: `${validNumber}`,
+			number: validNumber,
+			profilePicUrl,
+			isGroup: false,
+		};
 
-	const contactData = {
-		name: `${number}`,
-		number,
-		profilePicUrl,
-		isGroup: false,
-	};
+		const contact = await CreateOrUpdateContactService(contactData);
 
-	const contact = await CreateOrUpdateContactService(contactData);
+		let whatsapp: Whatsapp | null;
 
-	let whatsapp: Whatsapp | null;
+		if (whatsappId === undefined) {
+			whatsapp = await GetDefaultWhatsApp();
+		} else {
+			whatsapp = await Whatsapp.findByPk(whatsappId);
 
-	if (whatsappId === undefined) {
-		whatsapp = await GetDefaultWhatsApp();
-	} else {
-		whatsapp = await Whatsapp.findByPk(whatsappId);
-
-		if (whatsapp === null) {
-			throw new AppError(`whatsapp #${whatsappId} not found`);
+			if (whatsapp === null) {
+				throw new AppError(`whatsapp #${whatsappId} not found`);
+			}
 		}
+
+		const createTicket = await FindOrCreateTicketService(
+			contact,
+			whatsapp.id,
+			1,
+		);
+
+		const ticket = await ShowTicketService(createTicket.id);
+
+		SetTicketMessagesAsRead(ticket);
+
+		return ticket;
 	}
-
-	const createTicket = await FindOrCreateTicketService(
-		contact,
-		whatsapp.id,
-		1,
-	);
-
-	const ticket = await ShowTicketService(createTicket.id);
-
-	SetTicketMessagesAsRead(ticket);
-
-	return ticket;
+	return null;
 };
 
-export const index = async (req: Request, res: Response): Promise<Response> => {
+export const index = async (
+	req: Request,
+	res: Response,
+): Promise<Response | null> => {
 	const newContact: ContactData = req.body;
 	const { whatsappId }: WhatsappData = req.body;
 	const { body, quotedMsg }: MessageData = req.body;
@@ -100,23 +104,26 @@ export const index = async (req: Request, res: Response): Promise<Response> => {
 
 	const contactAndTicket = await createContact(whatsappId, newContact.number);
 
-	if (medias) {
-		await Promise.all(
-			medias.map(async (media: Express.Multer.File) => {
-				await SendWhatsAppMedia({
-					body,
-					media,
-					ticket: contactAndTicket,
-				});
-			}),
-		);
-	} else {
-		await SendWhatsAppMessage({
-			body,
-			ticket: contactAndTicket,
-			quotedMsg,
-		});
-	}
+	if (contactAndTicket) {
+		if (medias) {
+			await Promise.all(
+				medias.map(async (media: Express.Multer.File) => {
+					await SendWhatsAppMedia({
+						body,
+						media,
+						ticket: contactAndTicket,
+					});
+				}),
+			);
+		} else {
+			await SendWhatsAppMessage({
+				body,
+				ticket: contactAndTicket,
+				quotedMsg,
+			});
+		}
 
-	return res.send();
+		return res.send();
+	}
+	return null;
 };
