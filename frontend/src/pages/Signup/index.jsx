@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import * as Yup from "yup";
 import { useHistory } from "react-router-dom";
@@ -77,6 +77,19 @@ const SignUp = () => {
 
   const initialState = { name: "", email: "", password: "" };
   const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(async ()=>{
+    const verifyPage = await api.post("/auth/verify");
+    if(verifyPage.status !== 200){
+      return  <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <Typography component="h1" variant="h5">
+          Indisponível para cadastro
+        </Typography>
+      </Container>
+    }
+  }, [])
+
   const [user] = useState(initialState);
 
   const handleSignUp = async (values) => {
@@ -88,6 +101,8 @@ const SignUp = () => {
       toastError(err);
     }
   };
+
+
 
   return (
     <Container component="main" maxWidth="xs">
