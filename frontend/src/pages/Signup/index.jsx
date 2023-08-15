@@ -82,14 +82,13 @@ const SignUp = () => {
   const [user] = useState(initialState);
 
   const handleSignUp = async (values) => {
-    try {
-      await api.post("/auth/signup", values);
+    await api.post("/auth/signup", values).then(() =>{
       toast.success(i18n.t("signup.toasts.success"));
       history.push("/login");
-    } catch (err) {
+    }).catch((err)=>{
       console.log(err);
       toastError(err);
-    }
+    })
   };
 
 
