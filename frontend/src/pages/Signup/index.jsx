@@ -71,12 +71,7 @@ const UserSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
 });
 
-const verify = async ()=>{
-  const verifyPage = await api.post("/auth/verify");
-  return verifyPage;
-}
-
-const SignUp = () => {
+const SignUp = async () => {
   const classes = useStyles();
   const history = useHistory();
 
@@ -95,8 +90,8 @@ const SignUp = () => {
       toastError(err);
     }
   };
-
-  if(verify.status !== 200){
+  const verifyPage = await api.post("/auth/verify");
+  if(verifyPage.status !== 200){
       return  (
       <Container component="main" maxWidth="xs">
       <CssBaseline />
