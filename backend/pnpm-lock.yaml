@@ -78,8 +78,8 @@ dependencies:
     specifier: ^8.3.2
     version: 8.3.2
   whatsapp-web.js:
-    specifier: ^1.21.0
-    version: 1.21.0
+    specifier: 1.22.1
+    version: 1.22.1
   yup:
     specifier: ^0.32.11
     version: 0.32.11
@@ -7108,8 +7108,8 @@ packages:
     engines: {node: '>=10.4'}
     dev: true
 
-  /whatsapp-web.js@1.21.0:
-    resolution: {integrity: sha512-IkxWyNUrfQeg951FDOr80d6zoBL9qE9G63zVr64l+hSA8Td7qV/LBOofk6OjvREnSCMi30rTTjxtJvX8UbaP/g==}
+  /whatsapp-web.js@1.22.1:
+    resolution: {integrity: sha512-KaGxREc5x3LJmSae0RDIGJRLV+GYl9oy9WL6+MqlLrA2Bi34TGfmCrxb2voUM7RdpCdUp49UkQN/zdEygt4GxA==}
     engines: {node: '>=12.0.0'}
     dependencies:
       '@pedroslopez/moduleraid': 5.0.2
