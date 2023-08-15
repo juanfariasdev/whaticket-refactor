@@ -1,9 +1,9 @@
-import Setting from "../../models/Setting";
+import Setting from '../../models/Setting';
 
 const ListSettingsService = async (): Promise<Setting[] | undefined> => {
-  const settings = await Setting.findAll();
+	const settings = await Setting.findAll();
 
-  return settings;
+	return settings;
 };
 
 export default ListSettingsService;

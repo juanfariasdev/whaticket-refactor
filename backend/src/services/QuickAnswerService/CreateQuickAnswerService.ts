@@ -1,26 +1,26 @@
-import AppError from "../../errors/AppError";
-import QuickAnswer from "../../models/QuickAnswer";
+import AppError from '../../errors/AppError';
+import QuickAnswer from '../../models/QuickAnswer';
 
 interface Request {
-  shortcut: string;
-  message: string;
+	shortcut: string;
+	message: string;
 }
 
 const CreateQuickAnswerService = async ({
-  shortcut,
-  message
+	shortcut,
+	message,
 }: Request): Promise<QuickAnswer> => {
-  const nameExists = await QuickAnswer.findOne({
-    where: { shortcut }
-  });
+	const nameExists = await QuickAnswer.findOne({
+		where: { shortcut },
+	});
 
-  if (nameExists) {
-    throw new AppError("ERR__SHORTCUT_DUPLICATED");
-  }
+	if (nameExists) {
+		throw new AppError('ERR__SHORTCUT_DUPLICATED');
+	}
 
-  const quickAnswer = await QuickAnswer.create({ shortcut, message });
+	const quickAnswer = await QuickAnswer.create({ shortcut, message });
 
-  return quickAnswer;
+	return quickAnswer;
 };
 
 export default CreateQuickAnswerService;

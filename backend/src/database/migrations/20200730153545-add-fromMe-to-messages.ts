@@ -1,15 +1,15 @@
-import { QueryInterface, DataTypes } from "sequelize";
+import { QueryInterface, DataTypes } from 'sequelize';
 
 module.exports = {
-  up: (queryInterface: QueryInterface) => {
-    return queryInterface.addColumn("Messages", "fromMe", {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
-    });
-  },
+	up: (queryInterface: QueryInterface) => {
+		return queryInterface.addColumn('Messages', 'fromMe', {
+			type: DataTypes.BOOLEAN,
+			allowNull: false,
+			defaultValue: false,
+		});
+	},
 
-  down: (queryInterface: QueryInterface) => {
-    return queryInterface.removeColumn("Messages", "fromMe");
-  }
+	down: (queryInterface: QueryInterface) => {
+		return queryInterface.removeColumn('Messages', 'fromMe');
+	},
 };

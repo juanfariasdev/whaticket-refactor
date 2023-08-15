@@ -1,16 +1,16 @@
-import QuickAnswer from "../../models/QuickAnswer";
-import AppError from "../../errors/AppError";
+import QuickAnswer from '../../models/QuickAnswer';
+import AppError from '../../errors/AppError';
 
 const DeleteQuickAnswerService = async (id: string): Promise<void> => {
-  const quickAnswer = await QuickAnswer.findOne({
-    where: { id }
-  });
+	const quickAnswer = await QuickAnswer.findOne({
+		where: { id },
+	});
 
-  if (!quickAnswer) {
-    throw new AppError("ERR_NO_QUICK_ANSWER_FOUND", 404);
-  }
+	if (!quickAnswer) {
+		throw new AppError('ERR_NO_QUICK_ANSWER_FOUND', 404);
+	}
 
-  await quickAnswer.destroy();
+	await quickAnswer.destroy();
 };
 
 export default DeleteQuickAnswerService;

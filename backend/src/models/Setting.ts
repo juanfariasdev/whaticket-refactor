@@ -1,26 +1,26 @@
 import {
-  Table,
-  Column,
-  CreatedAt,
-  UpdatedAt,
-  Model,
-  PrimaryKey
-} from "sequelize-typescript";
+	Table,
+	Column,
+	CreatedAt,
+	UpdatedAt,
+	Model,
+	PrimaryKey,
+} from 'sequelize-typescript';
 
 @Table
 class Setting extends Model<Setting> {
-  @PrimaryKey
-  @Column
-  key: string;
+	@PrimaryKey
+	@Column
+	key: string;
 
-  @Column
-  value: string;
+	@Column
+	value: string;
 
-  @CreatedAt
-  createdAt: Date;
+	@CreatedAt
+	createdAt: Date;
 
-  @UpdatedAt
-  updatedAt: Date;
+	@UpdatedAt
+	updatedAt: Date;
 }
 
 export default Setting;

@@ -1,14 +1,14 @@
-import AppError from "../../errors/AppError";
-import Queue from "../../models/Queue";
+import AppError from '../../errors/AppError';
+import Queue from '../../models/Queue';
 
 const ShowQueueService = async (queueId: number | string): Promise<Queue> => {
-  const queue = await Queue.findByPk(queueId);
+	const queue = await Queue.findByPk(queueId);
 
-  if (!queue) {
-    throw new AppError("ERR_QUEUE_NOT_FOUND");
-  }
+	if (!queue) {
+		throw new AppError('ERR_QUEUE_NOT_FOUND');
+	}
 
-  return queue;
+	return queue;
 };
 
 export default ShowQueueService;

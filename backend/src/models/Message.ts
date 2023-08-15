@@ -1,84 +1,84 @@
 import {
-  Table,
-  Column,
-  CreatedAt,
-  UpdatedAt,
-  Model,
-  DataType,
-  PrimaryKey,
-  Default,
-  BelongsTo,
-  ForeignKey
-} from "sequelize-typescript";
-import Contact from "./Contact";
-import Ticket from "./Ticket";
+	Table,
+	Column,
+	CreatedAt,
+	UpdatedAt,
+	Model,
+	DataType,
+	PrimaryKey,
+	Default,
+	BelongsTo,
+	ForeignKey,
+} from 'sequelize-typescript';
+import Contact from './Contact';
+import Ticket from './Ticket';
 
 @Table
 class Message extends Model<Message> {
-  @PrimaryKey
-  @Column
-  id: string;
+	@PrimaryKey
+	@Column
+	id: string;
 
-  @Default(0)
-  @Column
-  ack: number;
+	@Default(0)
+	@Column
+	ack: number;
 
-  @Default(false)
-  @Column
-  read: boolean;
+	@Default(false)
+	@Column
+	read: boolean;
 
-  @Default(false)
-  @Column
-  fromMe: boolean;
+	@Default(false)
+	@Column
+	fromMe: boolean;
 
-  @Column(DataType.TEXT)
-  body: string;
+	@Column(DataType.TEXT)
+	body: string;
 
-  @Column(DataType.STRING)
-  get mediaUrl(): string | null {
-    if (this.getDataValue("mediaUrl")) {
-      return `${process.env.BACKEND_URL}:${
-        process.env.PROXY_PORT
-      }/public/${this.getDataValue("mediaUrl")}`;
-    }
-    return null;
-  }
+	@Column(DataType.STRING)
+	get mediaUrl(): string | null {
+		if (this.getDataValue('mediaUrl')) {
+			return `${process.env.BACKEND_URL}:${
+				process.env.PROXY_PORT
+			}/public/${this.getDataValue('mediaUrl')}`;
+		}
+		return null;
+	}
 
-  @Column
-  mediaType: string;
+	@Column
+	mediaType: string;
 
-  @Default(false)
-  @Column
-  isDeleted: boolean;
+	@Default(false)
+	@Column
+	isDeleted: boolean;
 
-  @CreatedAt
-  @Column(DataType.DATE(6))
-  createdAt: Date;
+	@CreatedAt
+	@Column(DataType.DATE(6))
+	createdAt: Date;
 
-  @UpdatedAt
-  @Column(DataType.DATE(6))
-  updatedAt: Date;
+	@UpdatedAt
+	@Column(DataType.DATE(6))
+	updatedAt: Date;
 
-  @ForeignKey(() => Message)
-  @Column
-  quotedMsgId: string;
+	@ForeignKey(() => Message)
+	@Column
+	quotedMsgId: string;
 
-  @BelongsTo(() => Message, "quotedMsgId")
-  quotedMsg: Message;
+	@BelongsTo(() => Message, 'quotedMsgId')
+	quotedMsg: Message;
 
-  @ForeignKey(() => Ticket)
-  @Column
-  ticketId: number;
+	@ForeignKey(() => Ticket)
+	@Column
+	ticketId: number;
 
-  @BelongsTo(() => Ticket)
-  ticket: Ticket;
+	@BelongsTo(() => Ticket)
+	ticket: Ticket;
 
-  @ForeignKey(() => Contact)
-  @Column
-  contactId: number;
+	@ForeignKey(() => Contact)
+	@Column
+	contactId: number;
 
-  @BelongsTo(() => Contact, "contactId")
-  contact: Contact;
+	@BelongsTo(() => Contact, 'contactId')
+	contact: Contact;
 }
 
 export default Message;

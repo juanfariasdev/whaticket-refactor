@@ -5,19 +5,19 @@
     "jest": true
   },
   "extends": [
-    "airbnb-base",
     "plugin:@typescript-eslint/recommended",
     "prettier/@typescript-eslint",
     "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 12,
+    "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "prettier"],
+  "plugins": ["@typescript-eslint", "prettier", "import"],
   "rules": {
     "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",
       { "argsIgnorePattern": "_" }
@@ -25,7 +25,17 @@
     "import/prefer-default-export": "off",
     "no-console": "off",
     "no-param-reassign": "off",
-    "prettier/prettier": "error",
+    "prettier/prettier": ["error", 
+    {
+				"printWidth": 80,
+				"tabWidth": 4,
+				"singleQuote": true,
+				"trailingComma": "all",
+				"arrowParens": "always",
+				"semi": true,
+				"useTabs": true
+			}
+    ],
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -33,17 +43,20 @@
         "ts": "never"
       }
     ],
+    "indent": ["error", "tab"],
     "quotes": [
       1,
-      "double",
+      "single",
       {
         "avoidEscape": true
       }
     ]
+    
   },
   "settings": {
     "import/resolver": {
       "typescript": {}
+      
     }
   }
 }

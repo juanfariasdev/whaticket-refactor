@@ -1,79 +1,79 @@
 import {
-  Table,
-  Column,
-  CreatedAt,
-  UpdatedAt,
-  Model,
-  PrimaryKey,
-  ForeignKey,
-  BelongsTo,
-  HasMany,
-  AutoIncrement,
-  Default
-} from "sequelize-typescript";
+	Table,
+	Column,
+	CreatedAt,
+	UpdatedAt,
+	Model,
+	PrimaryKey,
+	ForeignKey,
+	BelongsTo,
+	HasMany,
+	AutoIncrement,
+	Default,
+} from 'sequelize-typescript';
 
-import Contact from "./Contact";
-import Message from "./Message";
-import Queue from "./Queue";
-import User from "./User";
-import Whatsapp from "./Whatsapp";
+import Contact from './Contact';
+import Message from './Message';
+import Queue from './Queue';
+import User from './User';
+import Whatsapp from './Whatsapp';
 
 @Table
 class Ticket extends Model<Ticket> {
-  @PrimaryKey
-  @AutoIncrement
-  @Column
-  id: number;
+	@PrimaryKey
+	@AutoIncrement
+	@Column
+	id: number;
 
-  @Column({ defaultValue: "pending" })
-  status: string;
+	@Column({ defaultValue: 'pending' })
+	status: string;
 
-  @Column
-  unreadMessages: number;
+	@Column
+	unreadMessages: number;
 
-  @Column
-  lastMessage: string;
+	@Column
+	lastMessage: string;
 
-  @Default(false)
-  @Column
-  isGroup: boolean;
+	@Default(false)
+	@Column
+	isGroup: boolean;
 
-  @CreatedAt
-  createdAt: Date;
+	@CreatedAt
+	createdAt: Date;
 
-  @UpdatedAt
-  updatedAt: Date;
+	@UpdatedAt
+	updatedAt: Date;
 
-  @ForeignKey(() => User)
-  @Column
-  userId: number;
+	@ForeignKey(() => User)
+	@Column
+	userId: number;
 
-  @BelongsTo(() => User)
-  user: User;
+	@BelongsTo(() => User)
+	user: User;
 
-  @ForeignKey(() => Contact)
-  @Column
-  contactId: number;
+	@ForeignKey(() => Contact)
+	@Column
+	contactId: number;
 
-  @BelongsTo(() => Contact)
-  contact: Contact;
+	@BelongsTo(() => Contact)
+	contact: Contact;
 
-  @ForeignKey(() => Whatsapp)
-  @Column
-  whatsappId: number;
+	@ForeignKey(() => Whatsapp)
+	@Column
+	whatsappId: number;
 
-  @BelongsTo(() => Whatsapp)
-  whatsapp: Whatsapp;
+	@BelongsTo(() => Whatsapp)
+	whatsapp: Whatsapp;
 
-  @ForeignKey(() => Queue)
-  @Column
-  queueId: number;
+	@ForeignKey(() => Queue)
+	@Column
+	queueId: number;
 
-  @BelongsTo(() => Queue)
-  queue: Queue;
+	@BelongsTo(() => Queue)
+	queue: Queue;
 
-  @HasMany(() => Message)
-  messages: Message[];
+	@HasMany(() => Message)
+	messages: Message[];
 }
 
 export default Ticket;
